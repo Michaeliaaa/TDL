@@ -15,51 +15,75 @@ Ionicons.loadFont().then();
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const HomeStack = createStackNavigator();
-
-const HomeStackScreen = () => {
+const HomeStack = () => {
   return (
-    <HomeStack.Navigator
-      screenOptions={{
-        headerStyle: { backgroundColor: '#fff' },
-        headerTitle: 'To-do List ✔️',
-        headerTintColor: 'black',
-      }}>
-      < HomeStack.Screen name="Home" component={ HomeScreen }/>
-      < HomeStack.Screen name="Completed" component={ CompletedScreen } />
-      < HomeStack.Screen name="Incomplete" component={ IncompleteScreen } />
-    </HomeStack.Navigator>
+    <Stack.Navigator>
+      < Stack.Screen 
+        name="Home" 
+        component={ HomeScreen }
+        options={{ title: 'To-do List ✔️' }}
+      />
+    </Stack.Navigator>
   );
-}
+};
+
+const IncompleteStack = () => {
+  return (
+    <Stack.Navigator>
+      < Stack.Screen 
+        name="Incomplete Tasks" 
+        component={ IncompleteScreen }
+        options={{ title: 'To-do List ✔️' }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const CompletedStack = () => {
+  return (
+    <Stack.Navigator>
+      < Stack.Screen 
+        name="Completed Tasks" 
+        component={ CompletedScreen }
+        options={{ title: 'To-do List ✔️' }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const AppTab = () => {
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color, size }) => {
+          let iconName;
+          if (route.name === 'Home') {
+            iconName = 'home';
+          } else if (route.name === 'Completed') {
+            iconName = 'checkmark-circle-outline';
+          } else if (route.name === 'Incomplete') {
+            iconName = 'bookmark-outline';
+          }
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+      })}
+      tabBarOptions={{
+        activeTintColor: '#FF0000',
+        inactiveTintColor: '#979797',
+        keyboardHidesTabBar: true,
+      }}>
+      <Tab.Screen name="Home" component={ HomeStack } />
+      <Tab.Screen name="Incomplete" component={ IncompleteStack } />
+      <Tab.Screen name="Completed" component={ CompletedStack } />
+    </Tab.Navigator>
+  );
+};
 
 const App = () => {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Tab.Navigator
-          screenOptions={({ route }) => ({
-            tabBarIcon: ({ color, size }) => {
-              let iconName;
-              if (route.name === 'Home') {
-                iconName = 'home';
-              } else if (route.name === 'Completed') {
-                iconName = 'checkmark-circle-outline';
-              } else if (route.name === 'Incomplete') {
-                iconName = 'bookmark-outline';
-              }
-              return <Ionicons name={iconName} size={size} color={color} />;
-            },
-          })}
-          tabBarOptions={{
-            activeTintColor: '#FF0000',
-            inactiveTintColor: '#979797',
-            keyboardHidesTabBar: true,
-          }}
-        >
-          <Tab.Screen name="Home" component={HomeStackScreen} />
-          <Tab.Screen name="Completed" component={CompletedScreen} />
-          <Tab.Screen name="Incomplete" component={IncompleteScreen} />
-        </Tab.Navigator>
+        <AppTab />
       </NavigationContainer>
     </Provider>
   );

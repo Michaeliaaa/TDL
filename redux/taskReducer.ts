@@ -1,7 +1,7 @@
 import {
-  ADD_TASK,
-  DELETE_TASK,
-  EDIT_TASK,
+  ADD_TODO,
+  DELETE_TODO,
+  EDIT_TODO,
   GET_TASKS,
   TaskActions,
   TOGGLE_DONE,
@@ -26,11 +26,11 @@ export const TaskReducer = (
   action: TaskActions,
 ) => {
   switch (action.type) {
-    case ADD_TASK: {
+    case ADD_TODO: {
       const newTask = Object.assign({}, action.payload, {id: Math.random()});
       return {...state, tasks: [newTask, ...state.tasks]};
     }
-    case DELETE_TASK: {
+    case DELETE_TODO: {
       const updatedTasks = state.tasks.filter(
         task => task.id !== action.payload.id,
       );
@@ -39,7 +39,7 @@ export const TaskReducer = (
         tasks: updatedTasks,
       };
     }
-    case EDIT_TASK: {
+    case EDIT_TODO: {
       const editedTask = state.tasks.find(
         task => task.id === action.payload.id,
       );

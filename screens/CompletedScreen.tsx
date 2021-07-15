@@ -4,7 +4,7 @@ import { SafeAreaView, Text, StyleSheet } from 'react-native';
 export const CompletedScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
-        <Text style={styles.text}> Completed Tasks ✅ </Text>
+        <Text style={styles.text}> Completed ✅ </Text>
     </SafeAreaView>
   );
 };

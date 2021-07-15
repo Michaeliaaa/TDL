@@ -1,22 +1,22 @@
+import { useDispatch } from 'react-redux';
 import React, { useRef, useState } from 'react';
 import { View, TouchableOpacity, Text, TextInput, StyleSheet } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { DELETE_TASK, EDIT_TASK, TOGGLE_DONE } from '../redux/actionTypes';
+import { DELETE_TODO, EDIT_TODO, TOGGLE_DONE } from '../redux/actionTypes';
 
 export type TaskProps = {
   id: number;
-  description: string;
-  done: boolean;
+  desc: string;
+  isCompleted: boolean;
 };
 
-export const Task = ({id, description, done}: TaskProps) => {
+export const Task = ({id, desc: description, isCompleted: done}: TaskProps) => {
   const [isFocused, setIsFocused] = useState(false);
   const [editText, setEditText] = useState('Edit');
 
   const dispatch = useDispatch();
 
   const deleteTask = () => {
-    dispatch({type: DELETE_TASK, payload: {id}});
+    dispatch({type: DELETE_TODO, payload: {id}});
   };
 
   const toggleTask = () => {
@@ -24,7 +24,7 @@ export const Task = ({id, description, done}: TaskProps) => {
   };
 
   const editTask = () => {
-    dispatch({type: EDIT_TASK, payload: {id, description: taskDescription}});
+    dispatch({type: EDIT_TODO, payload: {id, description: taskDescription}});
   };
 
   const [taskDescription, setTaskDescription] = useState<string>(description);

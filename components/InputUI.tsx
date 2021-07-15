@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import {ADD_TASK} from '../redux/actionTypes';
+import {ADD_TODO} from '../redux/actionTypes';
 
 export const InputUI = () => {
 
@@ -11,7 +11,7 @@ export const InputUI = () => {
   const addTask = (description: string) => {
     const newTask = { description, done: false };
     dispatch({ 
-        type: ADD_TASK, 
+        type: ADD_TODO, 
         payload: newTask 
       });
     setTask('');

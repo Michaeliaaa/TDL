@@ -1,23 +1,24 @@
 import {Task} from './taskReducer';
 
-export const ADD_TASK = 'ADD_TASK';
-export const DELETE_TASK = 'DELETE_TASK';
-export const EDIT_TASK = 'EDIT_TASK';
+export const ADD_TODO = 'ADD_TODO';
+export const DELETE_TODO = 'DELETE_TODO';
+export const EDIT_TODO = 'EDIT_TODO';
+
 export const TOGGLE_DONE = 'TOGGLE_DONE';
 export const GET_TASKS = 'GET_TASKS';
 
 export interface AddTaskAction {
-  type: typeof ADD_TASK;
+  type: typeof ADD_TODO;
   payload: Task;
 }
 
 interface DeleteTaskAction {
-  type: typeof DELETE_TASK;
+  type: typeof DELETE_TODO;
   payload: Task;
 }
 
 interface EditTaskAction {
-  type: typeof EDIT_TASK;
+  type: typeof EDIT_TODO;
   payload: {id: number; description: string};
 }
 

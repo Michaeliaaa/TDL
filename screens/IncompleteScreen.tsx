@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 export const IncompleteScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.text}> Existing Tasks  ☑️🔜✅ </Text>
+      <Text style={styles.text}> To Be Done ☑️ </Text>
     </SafeAreaView>
   );
 };
