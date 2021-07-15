@@ -1,23 +1,21 @@
-import {Task} from './taskReducer';
+import {Todo} from './todoReducer';
 
-export const ADD_TODO = 'ADD_TODO';
-export const DELETE_TODO = 'DELETE_TODO';
-export const EDIT_TODO = 'EDIT_TODO';
-
+export const ADD_TODO = 'todo/add';
+export const DELETE_TODO = 'todo/delete';
+export const EDIT_TODO = 'todo/edit';
 export const TOGGLE_DONE = 'TOGGLE_DONE';
-export const GET_TASKS = 'GET_TASKS';
 
-export interface AddTaskAction {
+export interface AddTodoAction {
   type: typeof ADD_TODO;
-  payload: Task;
+  payload: Todo;
 }
 
-interface DeleteTaskAction {
+interface DeleteTodoAction {
   type: typeof DELETE_TODO;
-  payload: Task;
+  payload: Todo;
 }
 
-interface EditTaskAction {
+interface EditTodoAction {
   type: typeof EDIT_TODO;
   payload: {id: number; description: string};
 }
@@ -27,13 +25,8 @@ interface ToggleDoneAction {
   payload: {id: number};
 }
 
-interface GetTaskAction {
-  type: typeof GET_TASKS;
-}
-
-export type TaskActions =
-  | AddTaskAction
-  | EditTaskAction
-  | DeleteTaskAction
-  | ToggleDoneAction
-  | GetTaskAction;
+export type TodoActions =
+  | AddTodoAction
+  | EditTodoAction
+  | DeleteTodoAction
+  | ToggleDoneAction;

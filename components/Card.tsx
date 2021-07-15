@@ -1,68 +1,71 @@
-import { useDispatch } from 'react-redux';
 import React, { useRef, useState } from 'react';
-import { View, TouchableOpacity, Text, TextInput, StyleSheet } from 'react-native';
-import { DELETE_TODO, EDIT_TODO, TOGGLE_DONE } from '../redux/actionTypes';
+import { View, TouchableOpacity, Text, TextInput, StyleSheet, Alert } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { deleteTodo, editTodo, toggleDone } from '../redux/actionCreators';
 
-export type TaskProps = {
+export type TodoProps = {
   id: number;
-  desc: string;
+  description: string;
   isCompleted: boolean;
 };
 
-export const Task = ({id, desc: description, isCompleted: done}: TaskProps) => {
-  const [isFocused, setIsFocused] = useState(false);
+export const Todo = ({id, description, isCompleted: completed}: TodoProps) => {
   const [editText, setEditText] = useState('Edit');
+  const [todoDescription, setTodoDescription] = useState(description);
 
   const dispatch = useDispatch();
 
-  const deleteTask = () => {
-    dispatch({type: DELETE_TODO, payload: {id}});
+  const onDelete = () => {
+    dispatch(deleteTodo(id));
   };
 
-  const toggleTask = () => {
-    dispatch({type: TOGGLE_DONE, payload: {id}});
+  const onToggle = () => {
+    dispatch(toggleDone(id));
   };
 
-  const editTask = () => {
-    dispatch({type: EDIT_TODO, payload: {id, description: taskDescription}});
-  };
+  const onEdit = () => {
+    dispatch(editTodo(id, todoDescription));
 
-  const [taskDescription, setTaskDescription] = useState<string>(description);
+  };
 
   const textInputRef = useRef<TextInput>(null);
 
-  const textDecoration = done ? 'line-through' : 'none';
+  const textDecoration = completed ? 'line-through' : 'none';
 
-  const completedTask = {
-    backgroundColor: done ? '#dcdcdc' : '#fff',
-    opacity: done ? 0.5 : 1.0,
+  const completedTodo = {
+    backgroundColor: completed ? '#BB888B' : '#fff',
+    opacity: completed ? 0.5 : 1.0,
   };
 
+  const onFocus = () => {
+    textInputRef.current?.focus();
+    setEditText('Confirm');
+  };
+
+  const onBlur = () => {
+    textInputRef.current?.blur();
+    setEditText('Edit');
+  };
+
+  const isFocused = textInputRef.current?.isFocused();
+
   return (
-    <View style={[styles.container, completedTask]}>
+    <View style={[styles.container, completedTodo]}>
       <View style={styles.leftItems}>
-        <TouchableOpacity style={styles.checkbox} onPress={toggleTask}>
-          {done && <Text style={styles.check}>✓</Text>}
+        <TouchableOpacity style={styles.checkbox} onPress={onToggle}>
+          {completed && <Text style={styles.check}>✓ </Text>}
         </TouchableOpacity>
         <TextInput
           ref={textInputRef}
           style={[styles.itemText, {textDecorationLine: textDecoration}]}
           maxLength={100}
-          value={taskDescription}
-          onChangeText={setTaskDescription}
-          onFocus={() => {
-            setIsFocused(true);
-            setEditText('Confirm');
-          }}
-          onBlur={() => {
-            setIsFocused(false);
-            setEditText('Edit');
-          }}
+          value={todoDescription}
+          onChangeText={setTodoDescription}
+          onFocus={onFocus}
+          onBlur={onBlur}
           onSubmitEditing={() => {
-            if (textInputRef.current) {
-              textInputRef.current.blur();
-            }
-            editTask();
+            onBlur();
+            onEdit();
           }}
         />
       </View>
@@ -70,17 +73,17 @@ export const Task = ({id, desc: description, isCompleted: done}: TaskProps) => {
         <TouchableOpacity
           style={styles.editButton}
           onPress={() => {
-            if (textInputRef.current?.isFocused()) {
-              textInputRef.current.blur();
-              editTask();
+            if (isFocused) {
+              onBlur();
+              onEdit();
             } else {
-              textInputRef.current?.focus();
+              onFocus();
             }
           }}>
           <Text>{editText}</Text>
         </TouchableOpacity>
         {!isFocused && (
-          <TouchableOpacity style={styles.deleteButton} onPress={deleteTask}>
+          <TouchableOpacity style={styles.deleteButton} onPress={onDelete}>
             <Text>Delete</Text>
           </TouchableOpacity>
         )}
@@ -120,8 +123,6 @@ const styles = StyleSheet.create({
   },
   check: {
     fontSize: 16,
-    textAlign: 'center',
-    justifyContent: 'center',
   },
   itemText: {
     maxWidth: '60%',

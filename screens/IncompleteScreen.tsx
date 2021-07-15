@@ -1,11 +1,12 @@
 import React from 'react';
 import { SafeAreaView, Text, StyleSheet } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { FilterIncompleteList } from '../components/TaskList';
 
 export const IncompleteScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.text}> To Be Done ☑️ </Text>
+      <FilterIncompleteList />
     </SafeAreaView>
   );
 };

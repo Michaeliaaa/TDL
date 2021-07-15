@@ -1,13 +1,13 @@
 import React from 'react';
 import { SafeAreaView, Text, StyleSheet } from 'react-native';
-import { InputUI } from '../components/InputUI';
+import { Input } from '../components/Input';
 import { TaskList } from '../components/TaskList';
 
 export const HomeScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.text1}>What would you like to complete today? 📌</Text>
-      <InputUI />
+      <Input />
       <Text style={styles.text2}> Your To Do List 📋 </Text>
       <TaskList />
       <Text style={styles.text3}> “Do the hard jobs first. The easy jobs will take care of themselves." </Text>
