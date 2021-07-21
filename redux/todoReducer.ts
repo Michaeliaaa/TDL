@@ -2,7 +2,7 @@ import {
   ADD_TODO,
   DELETE_TODO,
   EDIT_TODO,
-  TodoActions as TodoActions,
+  TodoActions,
   TOGGLE_DONE,
 } from './actionTypes';
 

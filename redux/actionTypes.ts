@@ -3,7 +3,7 @@ import {Todo} from './todoReducer';
 export const ADD_TODO = 'todo/add';
 export const DELETE_TODO = 'todo/delete';
 export const EDIT_TODO = 'todo/edit';
-export const TOGGLE_DONE = 'TOGGLE_DONE';
+export const TOGGLE_DONE = 'todo/toggle';
 
 export interface AddTodoAction {
   type: typeof ADD_TODO;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, Text, StyleSheet } from 'react-native';
-import { FilterIncompleteList } from '../components/TaskList';
+import { FilterIncompleteList } from '../components/List';
 
 export const IncompleteScreen = ({ navigation }) => {
   return (

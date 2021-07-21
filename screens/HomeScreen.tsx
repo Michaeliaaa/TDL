@@ -1,7 +1,7 @@
 import React from 'react';
 import { SafeAreaView, Text, StyleSheet } from 'react-native';
 import { Input } from '../components/Input';
-import { TaskList } from '../components/TaskList';
+import { TaskList } from '../components/List';
 
 export const HomeScreen = ({ navigation }) => {
   return (
