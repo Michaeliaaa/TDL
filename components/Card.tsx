@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { View, TouchableOpacity, Text, TextInput, StyleSheet, Alert } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { deleteTodo, editTodo, toggleDone } from '../redux/actionCreators';
+import { removeTodo } from '../database/operations';
 
 export type TodoProps = {
   id: number;

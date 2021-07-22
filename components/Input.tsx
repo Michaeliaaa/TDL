@@ -2,27 +2,33 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { addTodo } from '../redux/actionCreators';
+import { insertTodo } from '../database/operations';
+import uuid from 'react-native-uuid';
 
 export const Input = () => {
   // declare a new state variable, which we'll call "todo"
-  const [todo, setTodo] = useState('');
+  const [desc, setDesc] = useState('');
   const dispatch = useDispatch();
 
   const onSubmit = () => {
-    if (todo === '') {
+    if (desc === '') {
       Alert.alert('⚠️ Error adding todo ⚠️', 'Input cannot be empty!');
     } else {
-      dispatch(addTodo(todo));
+      dispatch(addTodo(desc));
+      let _id = uuid.v1()
+      const todo = {id: _id, description: desc, isCompleted: false};
+      console.log(`ID: ${todo.id} DESC: ${todo.description}`);
+      insertTodo(todo);
     }
-    setTodo('');
+    setDesc('');
   };
 
   return (
     <View style={styles.container}>
       <TextInput
         style={styles.input}
-        value={todo}
-        onChangeText={updatedTodo => setTodo(updatedTodo)}
+        value={desc}
+        onChangeText={updatedTodo => setDesc(updatedTodo)}
         placeholder="eg. Learn React"
       />
       <TouchableOpacity onPress={onSubmit}>
