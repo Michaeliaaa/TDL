@@ -1,21 +1,21 @@
 import { ADD_TODO, DELETE_TODO, EDIT_TODO, TOGGLE_DONE } from './actionTypes';
 
-export const addTodo = (description: string) => ({
+export const addTodo = (id: string, description: string) => ({
   type: ADD_TODO,
-  payload: {description},
+  payload: {id, description},
 });
 
-export const deleteTodo = (id: number) => ({
+export const deleteTodo = (id: string) => ({
   type: DELETE_TODO,
   payload: {id},
 });
 
-export const editTodo = (id: number, description: string) => ({
+export const editTodo = (id: string, description: string) => ({
   type: EDIT_TODO,
   payload: {id, description},
 });
 
-export const toggleDone = (id: number) => ({
+export const toggleDone = (id: string) => ({
   type: TOGGLE_DONE,
   payload: {id},
 });

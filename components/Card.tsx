@@ -2,10 +2,10 @@ import React, { useRef, useState } from 'react';
 import { View, TouchableOpacity, Text, TextInput, StyleSheet, Alert } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { deleteTodo, editTodo, toggleDone } from '../redux/actionCreators';
-import { removeTodo } from '../database/operations';
+import { deleteATodo, updateTodo, getCount } from '../database/operations';
 
 export type TodoProps = {
-  id: number;
+  id: string;
   description: string;
   isCompleted: boolean;
 };
@@ -17,16 +17,20 @@ export const Todo = ({id, description, isCompleted: completed}: TodoProps) => {
   const dispatch = useDispatch();
 
   const onDelete = () => {
+    console.log(`ACTION: DELETE, ID: ${id}`);
     dispatch(deleteTodo(id));
+    deleteATodo(id);
   };
 
   const onToggle = () => {
+    console.log(`ACTION: TOGGLE, ID: ${id}`);
     dispatch(toggleDone(id));
   };
 
   const onEdit = () => {
+    console.log(`ACTION: EDIT, ID: ${id}`);
     dispatch(editTodo(id, todoDescription));
-
+    updateTodo(id, todoDescription);
   };
 
   const textInputRef = useRef<TextInput>(null);
@@ -46,6 +50,7 @@ export const Todo = ({id, description, isCompleted: completed}: TodoProps) => {
   const onBlur = () => {
     textInputRef.current?.blur();
     setEditText('Edit');
+    onEdit();
   };
 
   const isFocused = textInputRef.current?.isFocused();
@@ -61,7 +66,7 @@ export const Todo = ({id, description, isCompleted: completed}: TodoProps) => {
           style={[styles.itemText, {textDecorationLine: textDecoration}]}
           maxLength={100}
           value={todoDescription}
-          onChangeText={setTodoDescription}
+          onChangeText={updatedTodo => setTodoDescription(updatedTodo)}
           onFocus={onFocus}
           onBlur={onBlur}
           onSubmitEditing={() => {
@@ -74,12 +79,7 @@ export const Todo = ({id, description, isCompleted: completed}: TodoProps) => {
         <TouchableOpacity
           style={styles.editButton}
           onPress={() => {
-            if (isFocused) {
-              onBlur();
-              onEdit();
-            } else {
-              onFocus();
-            }
+            onFocus();
           }}>
           <Text>{editText}</Text>
         </TouchableOpacity>

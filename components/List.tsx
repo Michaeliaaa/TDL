@@ -3,16 +3,13 @@ import {View, Text, FlatList, StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
 import {TodoState} from '../redux/todoReducer';
 import {Todo} from './Card';
-import Realm from 'realm';
-import { deleteAllTodos, getAllTodos } from '../database/operations';
+import { getAllTodos } from '../database/operations';
 
 export const TaskList = () => {
   const todos = useSelector<TodoState, TodoState['todos']>(
     state => state.todos,
   );
-  // const todos = getAllTodos();
 
-  //deleteAllTodos();
   getAllTodos();
 
   return (
@@ -22,7 +19,7 @@ export const TaskList = () => {
           flexGrow: 1, justifyContent: 'flex-end',
         }}
         inverted
-        keyExtractor={(item) => item.description}
+        keyExtractor={(item) => item.id}
         data={todos} 
         renderItem={ ({item}) => <Todo {...item} />}
       />
@@ -41,7 +38,7 @@ export const FilterCompletedList = () => {
           flexGrow: 1, justifyContent: 'flex-end',
         }}
         inverted
-        keyExtractor={(item) => item.description}
+        keyExtractor={(item) => item.id}
         data={todos.filter(data => data.isCompleted)} 
         renderItem={ ({item}) => <Todo {...item} />}
       />
@@ -60,7 +57,7 @@ export const FilterIncompleteList = () => {
           flexGrow: 1, justifyContent: 'flex-end',
         }}
         inverted
-        keyExtractor={(item) => item.description}
+        keyExtractor={(item) => item.id}
         data={todos.filter(data => !data.isCompleted)} 
         renderItem={ ({item}) => <Todo {...item} />}
       />

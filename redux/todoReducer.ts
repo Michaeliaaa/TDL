@@ -7,7 +7,7 @@ import {
 } from './actionTypes';
 
 export type Todo = {
-  id: number;
+  id: string;
   description: string;
   isCompleted: boolean;
 };
@@ -26,7 +26,7 @@ export const TodoReducer = (
 ) => {
   switch (action.type) {
     case ADD_TODO: {
-      const newTodo = Object.assign({}, action.payload, {id: Math.random()});
+      const newTodo = Object.assign({}, action.payload, action.payload.id);
       return {...state, todos: [newTodo, ...state.todos]};
     }
     case DELETE_TODO: {

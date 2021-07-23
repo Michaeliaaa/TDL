@@ -17,12 +17,12 @@ interface DeleteTodoAction {
 
 interface EditTodoAction {
   type: typeof EDIT_TODO;
-  payload: {id: number; description: string};
+  payload: {id: string; description: string};
 }
 
 interface ToggleDoneAction {
   type: typeof TOGGLE_DONE;
-  payload: {id: number};
+  payload: {id: string};
 }
 
 export type TodoActions =
