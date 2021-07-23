@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { addTodo } from '../redux/actionCreators';
-import { insertTodo, getAllTodos } from '../database/operations';
+import { insertTodo, existingID, existingDesc, existingCompletion } from '../database/operations';
 import uuid from 'react-native-uuid';
 
 export const Input = () => {
@@ -10,12 +10,17 @@ export const Input = () => {
   const [desc, setDesc] = useState('');
   const dispatch = useDispatch();
 
+  let count = existingDesc.length;
+  for (let i = 0; i < count; i++) {
+    dispatch(addTodo(existingID[i], existingDesc[i], existingCompletion[i]));
+  }
+
   const onSubmit = () => {
     if (desc === '') {
       Alert.alert('⚠️ Error adding todo ⚠️', 'Input cannot be empty!');
     } else {
       let _id = uuid.v1().toString();
-      dispatch(addTodo(_id, desc));
+      dispatch(addTodo(_id, desc, false));
       const todo = {id: _id, description: desc, isCompleted: false};
       insertTodo(todo);
       console.log(`ACTION: INSERT, ID: ${_id}`);

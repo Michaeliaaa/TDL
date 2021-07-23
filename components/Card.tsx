@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { View, TouchableOpacity, Text, TextInput, StyleSheet, Alert } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { deleteTodo, editTodo, toggleDone } from '../redux/actionCreators';
-import { deleteATodo, updateTodo, getCount } from '../database/operations';
+import { deleteATodo, updateTodo, updateCompletion } from '../database/operations';
 
 export type TodoProps = {
   id: string;
@@ -22,9 +22,19 @@ export const Todo = ({id, description, isCompleted: completed}: TodoProps) => {
     deleteATodo(id);
   };
 
+  // const onDeleteAll = () => {
+  //   let count = existingID.length;
+  //   for (let i = 0; i < count; i++) {
+  //     console.log(`ACTION ALL: DELETE, ID: ${existingID[i]}`);
+  //     dispatch(deleteTodo(existingID[i]));
+  //     deleteATodo(existingID[i]);
+  //   }
+  // }
+
   const onToggle = () => {
     console.log(`ACTION: TOGGLE, ID: ${id}`);
     dispatch(toggleDone(id));
+    updateCompletion(id);
   };
 
   const onEdit = () => {

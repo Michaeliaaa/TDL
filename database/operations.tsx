@@ -24,6 +24,21 @@ export const updateTodo =  (todoID, todo) => new Promise<void>((resolve, reject)
     }).catch((error) => reject(error));
 });
 
+export const updateCompletion =  (todoID) => new Promise<void>((resolve, reject) => {
+    Realm.open(config).then(realm => {
+        realm.write(()=>{
+            let updatingRow:TodoProps = realm.objectForPrimaryKey('Todo', todoID);
+            if (updatingRow.isCompleted == true) {
+                updatingRow.isCompleted = false;
+            } else {
+                updatingRow.isCompleted = true;
+            }
+            resolve();            
+        })
+        console.log('LOG: TODO COMPLETION UPDATED');
+    }).catch((error) => reject(error));
+});
+
 export const deleteATodo =  (todoID) => new Promise<void>((resolve, reject) => {
     Realm.open(config).then(realm => {
         realm.write(()=>{
@@ -35,33 +50,33 @@ export const deleteATodo =  (todoID) => new Promise<void>((resolve, reject) => {
     }).catch((error) => reject(error));
 });
 
-export const deleteAllTodos = () => new Promise<void>((resolve, reject) => {
-    Realm.open(config).then(realm => {
-        realm.write(()=>{
-            let updatingRows = realm.objects('Todo');
-            realm.delete(updatingRows);
-            resolve();            
-        })
-    }).catch((error) => reject(error));
-});
+// export const deleteAllTodos = () => new Promise<void>((resolve, reject) => {
+//     Realm.open(config).then(realm => {
+//         realm.write(()=>{
+//             let updatingRows = realm.objects('Todo');
+//             realm.delete(updatingRows);
+//             resolve();            
+//         })
+//     }).catch((error) => reject(error));
+// });
 
 export const getAllTodos = () => new Promise((resolve, reject) => {
     let allTodos;
     Realm.open(config).then(realm => {
         allTodos = realm.objects('Todo');
-        //let findObject = realm.objectForPrimaryKey('Todo', '5f9d0e32-eac4-11eb-a557-933f742d456c');
-        //console.log({allTodos});
-        //console.log(findObject);
+        let count = allTodos.length;
+        console.log(count);
+        for (let i = 0; i < count; i++) {
+            console.log(allTodos[i].id, allTodos[i].description);
+            existingID[i] = allTodos[i].id
+            existingDesc[i] = allTodos[i].description;
+            existingCompletion[i] = allTodos[i].isCompleted;
+        }
         resolve(allTodos);  
     }).catch((error) => reject(error));
-    return allTodos;
-});
+ });
 
-export const getCount = () => new Promise((resolve, reject) => {
-    let count: number = 0;
-    Realm.open(config).then(realm => {
-        count = realm.objects('Todo').length;
-        resolve(count);
-    }).catch((error) => reject(error));
-    return count;
-});
+ getAllTodos();
+ export let existingID = [];
+ export let existingDesc = [];
+ export let existingCompletion = [];

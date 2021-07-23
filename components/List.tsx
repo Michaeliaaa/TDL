@@ -1,16 +1,13 @@
 import React from 'react';
-import {View, Text, FlatList, StyleSheet} from 'react-native';
-import {useSelector} from 'react-redux';
-import {TodoState} from '../redux/todoReducer';
-import {Todo} from './Card';
-import { getAllTodos } from '../database/operations';
+import { View, FlatList, StyleSheet } from 'react-native';
+import { useSelector } from 'react-redux';
+import { TodoState } from '../redux/todoReducer';
+import { Todo } from './Card';
 
 export const TaskList = () => {
   const todos = useSelector<TodoState, TodoState['todos']>(
     state => state.todos,
   );
-
-  getAllTodos();
 
   return (
     <View style={styles.container}>
